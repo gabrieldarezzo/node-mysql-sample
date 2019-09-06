@@ -1,56 +1,59 @@
-// const Manicure = require('./../models/Manicure')
 const sequelize = require('./../models/sequilize');
-const Manicure = sequelize.import('./../models/Manicure');
+const Locations = sequelize.import('./../models/Locations');
 
 
 module.exports = {
     async index(req, res) {
-        // Retorna Paginado
-        // const manicures = await Manicure.findAndCountAll();
-        const manicures = await Manicure.findAll({
-            order: [ [ 'username', 'ASC' ]],
-        });
+        const locations = await Locations.findAll();
         return res.status(200)
-            .json(manicures);
+            .json(locations);
     },
     async store(req, res) {
-
-        const manicureRequest = req.body;
-        
-
-        // Verifica se existe o E-mail
-        const existsManicure = await Manicure.findOne({
-            where : {email: manicureRequest.email}
-        });
-
-        if(existsManicure) {
-            return res.status(401)
-                .json({
-                    status : false,
-                    message: `Opss, o email: '${manicureRequest.email}' já está cadastrado`,
-                });
-        }
-        const data = await Manicure.create(manicureRequest);
+        const locationRequest = req.body;
+        const data = await Locations.create(locationRequest);
 
         return res.status(200)
-            .json(data);
-        
+            .json(data);            
     },
-    async getManicure(req, res) {
+
+    async update(req, res) {
         const { id } = req.params;
-        const manicure = await Manicure.findByPk(id);
+        const locationRequest = req.body;
+        // const data = await Locations.create(locationRequest);
+        // const location = await Locations.findByPk(id);
+        // location.alter(locationRequest);
+        const locationResult = await Locations.update(
+            locationRequest,
+            {where: {
+                id: id
+            }});
+
+
         return res.status(200)
-            .json(manicure);
+            .json({
+                status : true,
+                updatedAffectLines : locationRequest,
+            });
     },
-    async deleteManicure(req, res) {
+
+    async delete(req, res) {
         const { id } = req.params;
-        const manicure = await Manicure.findByPk(id);
-        console.log(manicure)
+        
+        const locationResult = await Locations.destroy({where: {id}});
+        
         return res.status(200)
-            .json(manicure);
+            .json({
+                status : true,
+                updatedAffectLines : locationResult,
+            });
     },
-   
 
+    
 
-
+    async get(req, res) {
+        const { id } = req.params;
+        const location = await Locations.findByPk(id);
+        return res.status(200)
+            .json(location);
+    }
 };

@@ -1,4 +1,8 @@
 # Back-End
+NodeJs + Mysql   
+![Exemplo da Aplicação](docs/app.jpg)
+
+Insomnia export: `Insomnia_2019-09-06.json`
 
 
 ## Objetivo 
@@ -7,24 +11,55 @@ Cadastrar:
 Manicures (users) 
 Endereços (locations) 
 
-Manicures:Endereços (1:n), ou seja uma manicure pode ter diversos endereços de atendimento
+Manicures:Endereços (1:n), ou seja uma manicure pode ter diversos endereços de atendimento.
 
 
-[x] Publicar no github =>
+[x] Publicar no github => https://github.com/gabrieldarezzo/node-mysql-sample.git
 [x] Cadastro Basico de Manicure (users)
 [ ] Integração com GoogleMaps (Ao cadastrar um endereço, converter em Lat/Lng)
 [ ] Buscar alternativa gratuita para rodar no Heroku o Mysql.
 
+[x] Pensar em CRUD padrão
 
 
 
+## Como rodar na sua maquina:
+
+Primeiramente é necessario:
+Mysql, Node, Git, Insomnia (Opcional)
+
+```shell
+git clone https://github.com/gabrieldarezzo/node-mysql-sample.git
+cd node-mysql-sample
+npm install
+```
+
+Altere o arquivo: `./src/models/sequilize.js` 
+E mude a string:
+```
+mysql://{DB_USER}:{DB_USER}@{DB_HOST}:{DB_PORT}/{DB_DATABA}
+```
+
+Ex: da minha:
+```
+mysql://root:@localhost:3306/nails
+```
+
+### Subir
+Após instalar todas as dep, simplesmente rode: 
+```shell
+npm run dev
+```
+
+### Deploy 
+```shell
+npm run start
+```
 
 ## Para teste estou utilizando o Insomnia
 Insomnia == Manipulação de HTTP 
 Enviar o Form> POST 
 Requisitar uma pagina> GET
-
-
 
 
 ## SQL 
@@ -60,9 +95,9 @@ CREATE TABLE locations (
 	city VARCHAR(250),
 	state CHAR(2) NOT NULL,	
 	usr_id INT(11) NOT NULL,
-	lat INT(11),
-	lng INT(11),	
-	KEY `idx_usr_id` (`usr_id`),
+	lat FLOAT(10, 8),
+	lng FLOAT(11, 8),	
+  KEY `idx_usr_id` (`usr_id`),
 	CONSTRAINT `fk_locations_users` FOREIGN KEY (`usr_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE
 )ENGINE=INNODB;
 
@@ -102,4 +137,21 @@ JOIN locations ON (
 WHERE 
 users.usr_id = 1
 ;
+SELECT 
+  * 
+FROM users 
+INNER JOIN locations ON (
+  locations.usr_id = users.id
+)
+;
+
+SELECT 
+COUNT(locations.id),
+  users.username
+FROM users
+LEFT JOIN locations ON (
+  locations.usr_id = users.id
+)
+GROUP BY users.id
+
 ```

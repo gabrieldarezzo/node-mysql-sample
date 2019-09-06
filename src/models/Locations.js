@@ -1,7 +1,8 @@
 const sequelize = require('./sequilize');
+// const Manicure = sequelize.import('./Manicure');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('locations', {        
+    const Locations = sequelize.define('locations', {        
         zip_code: DataTypes.STRING(8),
         street: DataTypes.STRING,
         street_number: DataTypes.STRING,
@@ -14,4 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false
     });
+
+    return Locations;
 }

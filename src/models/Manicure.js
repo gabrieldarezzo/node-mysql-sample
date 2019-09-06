@@ -1,4 +1,5 @@
-const sequelize = require('./sequilize');
+const Sequelize = require('./sequilize');
+const Locations = Sequelize.import('./Locations');
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define('user', {
@@ -9,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false
     });
+
+     User.hasMany(Locations, {foreignKey: 'usr_id'})
 
     return User;
 }
