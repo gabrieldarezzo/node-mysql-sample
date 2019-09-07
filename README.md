@@ -12,14 +12,11 @@ Manicures (users)
 Endereços (locations) 
 
 Manicures:Endereços (1:n), ou seja uma manicure pode ter diversos endereços de atendimento.
-
-
-[x] Publicar no github => https://github.com/gabrieldarezzo/node-mysql-sample.git
-[x] Cadastro Basico de Manicure (users)
-[ ] Integração com GoogleMaps (Ao cadastrar um endereço, converter em Lat/Lng)
-[ ] Buscar alternativa gratuita para rodar no Heroku o Mysql.
-
-[x] Pensar em CRUD padrão
+- [x] Publicar no github => https://github.com/gabrieldarezzo/node-mysql-sample.git
+- [x] Cadastro Basico de Manicure (users)
+- [ ] Integração com GoogleMaps (Ao cadastrar um endereço, converter em Lat/Lng)
+- [ ] Buscar alternativa gratuita para rodar no Heroku o Mysql.
+- [x] Pensar em CRUD padrão
 
 
 
@@ -155,3 +152,6 @@ LEFT JOIN locations ON (
 GROUP BY users.id
 
 ```
+
+Ps: Existe uma versão 'MongoDb' deste repo:
+https://github.com/gabrieldarezzo/mongodb-sample
